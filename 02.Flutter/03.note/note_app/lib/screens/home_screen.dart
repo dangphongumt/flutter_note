@@ -13,11 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Text> listText = [
-    const Text("ABC"),
-    const Text("dddd"),
-    const Text("FFFFF")
-  ];
+  List<Text> listText = [const Text("ABC"), const Text("dddd")];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +56,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     return GridView(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2),
-                      children: listText.toList(),
+                      children: snapshot.data!.docs
+                          .map((note) => noteCard(() {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          NoteReaderScreen(note),
+                                    ));
+                              }, note))
+                          .toList(),
                     );
                   }
 
